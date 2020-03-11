@@ -6,6 +6,11 @@ let hasSetOrigin = false
 let scrollOrigin = [0, 0]
 let scrollSpeed = 2.5
 
+let tween = {
+  x: 0,
+  y: 0
+}
+
 const $video = document.querySelector('video')
 const $canvas = document.querySelector('canvas')
 const ctx = $canvas.getContext('2d')
@@ -91,6 +96,8 @@ function checkForScrollGesture(hand) {
   if (canScroll && !hasSetOrigin) {
     let pixelCenter = projection.fromLatLngToPoint($map.getCenter())
     hasSetOrigin = true
+    tween.x = pixelCenter.x
+    tween.y = pixelCenter.y
     scrollOrigin = [pixelCenter.x, pixelCenter.y, thumb[0], thumb[1]]
   }
 }
@@ -106,8 +113,18 @@ function scrollMap(hand) {
     }
 
     let pixelCenter = projection.fromLatLngToPoint($map.getCenter())
-    pixelCenter.x = scrollOrigin[0] + delta.x * 0.0005
-    pixelCenter.y = scrollOrigin[1] + delta.y * 0.0005
+    let x = scrollOrigin[0] + delta.x * 0.0005
+    let y = scrollOrigin[1] + delta.y * 0.0005
+
+    TweenMax.to(tween, 1, {
+      x,
+      y,
+      overwrite: true,
+      ease: 'linear.easeNone',
+      immediate: true
+    })
+    pixelCenter.x = tween.x
+    pixelCenter.y = tween.y
 
     $map.setCenter(projection.fromPointToLatLng(pixelCenter))
     console.log(pixelCenter)
