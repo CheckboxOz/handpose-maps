@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Handpose Scroll</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <main>
+      <div class="text-center">
+        <p class="show-when-not-loaded">
+          <img src="https://media.giphy.com/media/giEKWdGQCwpTBDzTaX/source.gif" />
+        </p>
+        <p>
+          <button onclick="startTracking()" style="font-size: 36px; padding: 15px;">Start Webcam</button>
+        </p>
+        <p class="show-when-not-loaded">
+          Pinch your index finger and thumb together to initiate a scroll event. Then with your pinched fingers, move
+          your hand up and down to scroll!
+        </p>
+        <p class="show-when-not-loaded">
+          <a href="https://glitch.com/edit/#!/handpose-scroll-simple?path=src/app.js:6:14">View the Source!</a>
+        </p>
+      </div>
+      <div id="debug">
+        <canvas></canvas>
+        <video playsinline width="640" height="480"></video>
+      </div>
+    </main>
+
+    <!-- Disable caching on app.js while using http-server -->
+    <script>
+      const scripts = [
+        'src/app.js?nocache=' + Math.random(),
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyD_-g8oas6Ts8HuP9v-h3goGbyjx0ydyn0&callback=initMap'
+      ]
+
+      scripts.forEach((src) => {
+        const $script = document.createElement('script')
+        $script.src = src
+        document.body.appendChild($script)
+      })
+    </script>
+  </body>
+</html>
