@@ -127,7 +127,6 @@ function scrollMap(hand) {
     pixelCenter.y = tween.y
 
     $map.setCenter(projection.fromPointToLatLng(pixelCenter))
-    console.log(pixelCenter)
   }
 }
 
